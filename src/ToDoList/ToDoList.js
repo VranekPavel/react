@@ -6,48 +6,48 @@ class ToDoList extends React.Component{
     constructor (props){
         super(props);
         this.state = {
-            list: ["Vykouřit marihuanu", "Udělat domácí úkol na prvouku", "udělat dobrý skutek"],
-            checked: [true, false, false],
+            list: [[0, "Vykouřit marihuanu", true], [1, "Udělat domácí úkol na prvouku", false], [2, "udělat dobrý skutek", false]],
             newItem:"",
         }
     }
 
     changeCheck(val, key){
-        let array = this.state.checked.slice();
-        array[key] = val;
+        let array = this.state.list.slice();
+        array[key][2] = val;
         this.setState({
             checked: array,
         })
     }
 
-    renderItem(item, i){
+    renderItem(item){
         return(
-            <Item
-                key={i}
-                item={[item, i]}
-                change={(val, i) => this.changeCheck(val, i)}
-                checked={this.state.checked[i]}
-            />
+            <div key={item[0]}>
+                <Item
+                    item={item}
+                    change={(val, i) => this.changeCheck(val, i)}
+                    checked={item[2]}
+                />
+                <Button click={() => this.handleRemoveClick(item)} name={"Remove item"}/>
+            </div>
         );
     }
 
     handleAddClick(){
         let list = this.state.list.slice();
-        let checked = this.state.checked.slice();
-        list.push(this.state.newItem);
-        checked.push(false);
+        list.push([this.state.list.length, this.state.newItem, false]);
         this.setState({
             list:list,
-            checked:checked,
         })
     }
 
-    handleRemoveClick(){
-        let list = this.state.list.slice(0, this.state.list.length - 1);
-        let checked = this.state.checked.slice(0, this.state.list.length - 1);
+    handleRemoveClick(i){
+        console.log(i)
+        let list = this.state.list.slice();
+        let position = list.indexOf(i);
+        console.log(position);
+        list.splice(position, 1);
         this.setState({
             list:list,
-            checked:checked,
         })
     }
 
@@ -64,8 +64,7 @@ class ToDoList extends React.Component{
                 <h1>To do list!</h1>
                 <input onChange={(event) => this.newVal(event)}/>
                 <Button click={() => this.handleAddClick()} name={"Add item"}/>
-                <Button click={() => this.handleRemoveClick()} name={"Remove item"}/>
-                {this.state.list.map((item, i) =>  this.renderItem(item, i))}
+                {this.state.list.map((item) =>  this.renderItem(item))}
             </div>
         );
     }
