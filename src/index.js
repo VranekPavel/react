@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Tooltip from 'rc-tooltip';
 import logo from './logo.svg';
 import './index.css';
 import Game1 from './App2.js';
@@ -44,7 +45,9 @@ class Home extends React.Component{
     render(){
         return(
             <div>
-                <h1>This is home page</h1>
+                <Tooltip placement={"top"} trigger={["hover"]} overlay={<span>Vaše osobní údaje zpracováváme především za účelem vyřízení Vaší objednávky a za účelem doručení zboží, případně za účelem poskytnutí doplňujících služeb (např. pojistných či splátkových produktů). Nevyslovíte-li námitku proti zpracování osobních údajů za účelem zasílání obchodních sdělení, budeme Vaše osobní údaje zpracovávat také pro tyto účely. Více informací o zpracování Vašich osobních údajů a zejména o Vašich právech souvisejících se zpracováním se dozvíte v Zásadách ochrany osobních údajů. Přečíst si je můžete v tomto odkazu.</span>}>
+                    <h1>This is home page</h1>
+                </Tooltip>
                 <p>Shit is here</p>
                 <p>To switch to another pages use navigation.</p>
             </div>

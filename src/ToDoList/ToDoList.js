@@ -7,6 +7,7 @@ class ToDoList extends React.Component{
         super(props);
         this.state = {
             list: [[0, "Vykouřit marihuanu", true], [1, "Udělat domácí úkol na prvouku", false], [2, "udělat dobrý skutek", false]],
+            index: 3    ,
             newItem:"",
         }
     }
@@ -34,9 +35,10 @@ class ToDoList extends React.Component{
 
     handleAddClick(){
         let list = this.state.list.slice();
-        list.push([this.state.list.length, this.state.newItem, false]);
+        list.push([this.state.index, this.state.newItem, false]);
         this.setState({
             list:list,
+            index: this.state.index + 1
         })
     }
 
