@@ -1,28 +1,72 @@
 import React from "react";
 import Item from "./Components/Item";
+import Button from "./Components/Button"
 
 class ToDoList extends React.Component{
     constructor (props){
         super(props);
         this.state = {
-            list: ["Vykouřit marihuanu", "Udělat domácí úkol na prvouku", "udělat dobrý skutek"],
-            checked: [true, false, false],
+            list: [[0, "Vykouřit marihuanu", true], [1, "Udělat domácí úkol na prvouku", false], [2, "udělat dobrý skutek", false]],
+            index: 3    ,
+            newItem:"",
         }
     }
 
     changeCheck(val, key){
-        let array = this.state.checked.slice();
-        array[key] = val;
+        let array = this.state.list.slice();
+        array[key][2] = val;
         this.setState({
             checked: array,
         })
     }
 
+    renderItem(item){
+        return(
+            <div key={item[0]}>
+                <Item
+                    item={item}
+                    change={(val, i) => this.changeCheck(val, i)}
+                    checked={item[2]}
+                />
+                <Button click={() => this.handleRemoveClick(item)} name={"Remove item"}/>
+            </div>
+        );
+    }
+
+    handleAddClick(){
+        let list = this.state.list.slice();
+        list.push([this.state.index, this.state.newItem, false]);
+        this.setState({
+            list:list,
+            index: this.state.index + 1
+        })
+    }
+
+    handleRemoveClick(i){
+        console.log(i)
+        let list = this.state.list.slice();
+        let position = list.indexOf(i);
+        console.log(position);
+        list.splice(position, 1);
+        this.setState({
+            list:list,
+        })
+    }
+
+    newVal(event){
+        this.setState({
+            newItem: event.target.value,
+        })
+    }
+
+
     render(){
         return(
             <div>
                 <h1>To do list!</h1>
-                {this.state.list.map((item, i) => <Item key={i} item={[item, i]} change={(val, i) => this.changeCheck(val, i)} checked={this.state.checked[i]} />)}
+                <input onChange={(event) => this.newVal(event)}/>
+                <Button click={() => this.handleAddClick()} name={"Add item"}/>
+                {this.state.list.map((item) =>  this.renderItem(item))}
             </div>
         );
     }

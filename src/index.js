@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import Tooltip from 'rc-tooltip';
 import logo from './logo.svg';
 import './index.css';
 import Game1 from './App2.js';
